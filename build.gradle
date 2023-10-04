@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'com.diffplug.eclipse.apt' version '3.37.2'
+
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+ext {
+    mapstructVersion = "1.5.5.Final"
+    junitVersion = "5.7.2"
+    assertjVersion = "3.20.0"
+}
+
+
+dependencies {
+
+
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+
+
+    
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true'
+    ]
+}
+
+test {
+    useJUnitPlatform()
+}
